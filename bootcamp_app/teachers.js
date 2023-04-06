@@ -8,11 +8,11 @@ const pool = new Pool({
 });
 
 pool.query(`
-SELECT students.id as student_id, students.name as name, cohorts.name as cohort
-FROM students
-JOIN cohorts ON cohorts.id = cohort_id
-WHERE cohorts.name LIKE '%${process.argv[2]}%'
-LIMIT ${process.argv[3] || 5};
+SELECT count(assistance_requests.*) as total_assistances, teachers.name
+FROM assistance_requests
+JOIN teachers ON teachers.id = teacher_id
+WHERE name = 'Waylon Boehm'
+GROUP BY teachers.name;
 `)
 .then(res => {
   res.rows.forEach(user => {
